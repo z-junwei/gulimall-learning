@@ -22,7 +22,7 @@
             <groupId>com.atguigu.gulimall</groupId>
             <artifactId>gulimall-common</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-<!--            排除spring-cloud-starter-netflix-ribbon-->
+            <!--            排除spring-cloud-starter-netflix-ribbon-->
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework.cloud</groupId>
@@ -30,7 +30,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-<!--        加入spring-cloud-loadbalancer依赖-->
+        <!--        加入spring-cloud-loadbalancer依赖-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-loadbalancer</artifactId>

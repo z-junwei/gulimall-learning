@@ -9,6 +9,14 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
     gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowed-methods: "*"
+            allowed-headers: "*"
+            allow-credentials: true
+            exposedHeaders: "Content-Disposition,Content-Type,Cache-Control"
       routes:
         - id: test_route
           uri: https://www.baidu.com
@@ -52,6 +60,6 @@ spring:
           uri: lb://renren-fast
           predicates:
             - Path=/api/**
-          filters: # ????????????api?????/renren-fast?????/renren-fast????nacos?
+          filters:
             - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
 

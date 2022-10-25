@@ -41,6 +41,7 @@ public class SysCaptchaServiceImpl extends ServiceImpl<SysCaptchaDao, SysCaptcha
         }
         //生成文字验证码
         String code = producer.createText();
+        System.out.println("*************验证码：" + code );
 
         SysCaptchaEntity captchaEntity = new SysCaptchaEntity();
         captchaEntity.setUuid(uuid);
