@@ -1,8 +1,9 @@
 <!--  -->
 <template>
     <div>
+        <el-button type="danger" plain size="small" @click="batchDelete">批量删除</el-button>
         <el-tree :data="menus" :props="defaultProps" :expand-on-click-node="false" show-checkbox
-            :default-expanded-keys="expandedKey" node-key="catId">
+            :default-expanded-keys="expandedKey" node-key="catId" ref="menuTree">
             <span class="custom-tree-node" slot-scope="{ node, data }">
                 <span>{{ node.label }}</span>
                 <span>
@@ -85,6 +86,38 @@ export default {
                 console.log("成功获取到菜单数据...", data.data);
                 this.menus = data.data;
             });
+        },
+
+        // 批量删除
+        batchDelete() {
+            let catIds = [];
+            let catNames = [];
+            // this.$refs表示当前el-tree的所有引用
+            let checkNodes = this.$refs.menuTree.getCheckedNodes();
+            console.log("批量删除被选中的元素：", checkNodes);
+            for (let i = 0; i < checkNodes.length; i++) {
+                catIds.push(checkNodes[i].catId);
+                catNames.push(checkNodes[i].name);
+            }
+            this.$confirm(`是否删除【${catNames}】菜单?`, "提示", {
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                type: "warning",
+            }).then(() => {
+                this.$http({
+                    url: this.$http.adornUrl('/product/category/delete'),
+                    method: 'post',
+                    data: this.$http.adornData(catIds, false)
+                }).then(() => {
+                    this.$message({
+                        message: "批量删除成功",
+                        type: "success"
+                    });
+                    this.getMenus();
+                });
+            }).catch(() => {
+
+            })
         },
 
         // 根据提交类型是add、edit选择调用不同的方法
@@ -199,7 +232,7 @@ export default {
                         //刷新出新的菜单
                         this.getMenus();
                         //设置需要默认展开的菜单，使得删除后当前目录处于展开的状态
-                        this.expandKey = [node.parent.data.catId];
+                        this.expandedKey = [node.parent.data.catId];
                     });
                 })
                 .catch(() => { });
