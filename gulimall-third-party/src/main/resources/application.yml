@@ -1,0 +1,16 @@
+server:
+  port: 8800
+
+spring:
+  application:
+    name: gulimall-third-party
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+    alicloud:
+      access-key: LTAI5tGbe4LmsEDThTu99PTi #阿里云获取
+      secret-key: g5dkTAcDpJTCwIdDtZ5Lan7MlWYJKt #阿里云获取
+      oss:
+        endpoint: oss-cn-shanghai.aliyuncs.com
+        bucket: zjw-gulimall-images
